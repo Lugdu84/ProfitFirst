@@ -5,9 +5,9 @@ export default function RootLayout() {
 	return (
 		<Tabs>
 			<Tabs.Screen
-				name="index"
+				name="allocations"
 				options={{
-					title: 'Allocations',
+					headerShown: false,
 					tabBarIcon: ({ size, color }) => (
 						<MaterialIcons
 							name="dashboard"
