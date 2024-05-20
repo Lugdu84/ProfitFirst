@@ -1,9 +1,35 @@
-import { Stack } from "expo-router";
+import { Tabs } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function RootLayout() {
-  return (
-    <Stack>
-      <Stack.Screen name="index" />
-    </Stack>
-  );
+	return (
+		<Tabs>
+			<Tabs.Screen
+				name="index"
+				options={{
+					title: 'Allocations',
+					tabBarIcon: ({ size, color }) => (
+						<MaterialIcons
+							name="dashboard"
+							size={size}
+							color={color}
+						/>
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="accounts"
+				options={{
+					title: 'Accounts',
+					tabBarIcon: ({ color, size }) => (
+						<MaterialIcons
+							name="account-tree"
+							size={size}
+							color={color}
+						/>
+					),
+				}}
+			/>
+		</Tabs>
+	);
 }
