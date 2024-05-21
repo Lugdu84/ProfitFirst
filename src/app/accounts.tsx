@@ -1,15 +1,35 @@
 import AccountsList from '@/components/AccountsList';
+import database from '@/db/index.native';
+import Account from '@/model/Account';
 import { useState } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
-import { create } from 'react-test-renderer';
 
 export default function AccountsScreen() {
 	const [name, setName] = useState('');
 	const [cap, setCap] = useState('');
 	const [tap, setTap] = useState('');
 
-	const createAccount = () => {
+	const createAccount = async () => {
 		console.warn('Create account', name, cap, tap);
+		await database.write(async () => {
+			const newAccount = await database
+				.get<Account>('accounts')
+				.create((account) => {
+					account.name = name;
+					account.cap = Number(cap);
+					account.tap = Number(tap);
+				});
+		});
+	};
+
+	const handleRead = async () => {
+		const accountsCollection = database.get<Account>('accounts');
+		const accounts = await accountsCollection.query().fetch();
+
+		console.warn(
+			'accounts',
+			accounts.map((account) => account)
+		);
 	};
 	return (
 		<View style={styles.container}>
@@ -46,6 +66,10 @@ export default function AccountsScreen() {
 				title="Add account"
 				onPress={createAccount}
 			/>
+			<Button
+				title="Read"
+				onPress={handleRead}
+			/>
 		</View>
 	);
 }
@@ -75,3 +99,5 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 });
+
+// at 2:00:00
