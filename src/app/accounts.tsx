@@ -25,6 +25,15 @@ export default function AccountsScreen() {
 		reset();
 	};
 
+	// const testUpdate = async () => {
+	// 	await database.write(async () => {
+	// 		const account = await accountsCollection.query().fetch();
+	// 		await account[0].update((acc) => {
+	// 			acc.cap = 50;
+	// 		});
+	// 	});
+	// };
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>

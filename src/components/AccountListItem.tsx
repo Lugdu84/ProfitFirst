@@ -1,11 +1,12 @@
 import Account from '@/model/Account';
+import { withObservables } from '@nozbe/watermelondb/react';
 import { View, Text, StyleSheet } from 'react-native';
 
 type AccountListItemProps = {
 	account: Account;
 };
 
-export default function AccountListItem({ account }: AccountListItemProps) {
+function AccountListItem({ account }: AccountListItemProps) {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.name}>{account.name}</Text>
@@ -29,3 +30,12 @@ const styles = StyleSheet.create({
 	},
 	percentage: {},
 });
+
+const enhance = withObservables(
+	['account'],
+	({ account }: AccountListItemProps) => ({
+		account,
+	})
+);
+
+export default enhance(AccountListItem);

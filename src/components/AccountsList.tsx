@@ -18,7 +18,7 @@ function AccountsList({ accounts }: AccountsListProps) {
 	);
 }
 
-const enhance = withObservables(['accounts'], () => ({
+const enhance = withObservables([], () => ({
 	accounts: accountsCollection.query(),
 }));
 
