@@ -40,6 +40,7 @@ export default function AccountsScreen() {
 				<Text>Name</Text>
 				<Text>CAP</Text>
 				<Text>TAP</Text>
+				<Text>Actions</Text>
 			</View>
 			<AccountsList />
 			<View style={styles.inputRow}>
