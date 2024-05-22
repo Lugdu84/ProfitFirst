@@ -30,3 +30,5 @@ const database = new Database({
 });
 
 export default database;
+
+export const accountsCollection = database.get<Account>('accounts');

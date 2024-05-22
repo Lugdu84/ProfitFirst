@@ -1,5 +1,5 @@
 import AccountsList from '@/components/AccountsList';
-import database from '@/db/index.native';
+import database, { accountsCollection } from '@/db/index.native';
 import Account from '@/model/Account';
 import { useState } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
@@ -12,18 +12,15 @@ export default function AccountsScreen() {
 	const createAccount = async () => {
 		console.warn('Create account', name, cap, tap);
 		await database.write(async () => {
-			const newAccount = await database
-				.get<Account>('accounts')
-				.create((account) => {
-					account.name = name;
-					account.cap = Number(cap);
-					account.tap = Number(tap);
-				});
+			const newAccount = await accountsCollection.create((account) => {
+				account.name = name;
+				account.cap = Number(cap);
+				account.tap = Number(tap);
+			});
 		});
 	};
 
 	const handleRead = async () => {
-		const accountsCollection = database.get<Account>('accounts');
 		const accounts = await accountsCollection.query().fetch();
 
 		console.warn(
