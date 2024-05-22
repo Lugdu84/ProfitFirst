@@ -9,8 +9,13 @@ export default function AccountsScreen() {
 	const [cap, setCap] = useState('');
 	const [tap, setTap] = useState('');
 
+	const reset = () => {
+		setName('');
+		setCap('');
+		setTap('');
+	};
+
 	const createAccount = async () => {
-		console.warn('Create account', name, cap, tap);
 		await database.write(async () => {
 			const newAccount = await accountsCollection.create((account) => {
 				account.name = name;
@@ -18,6 +23,7 @@ export default function AccountsScreen() {
 				account.tap = Number(tap);
 			});
 		});
+		reset();
 	};
 
 	const handleRead = async () => {
