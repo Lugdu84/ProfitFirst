@@ -21,6 +21,7 @@ export default function NewAllocationScreen() {
 				<Text style={styles.label}>Income</Text>
 				<TextInput
 					value={income}
+					keyboardType="numeric"
 					onChangeText={setIncome}
 					placeholder="1234"
 					style={styles.input}
