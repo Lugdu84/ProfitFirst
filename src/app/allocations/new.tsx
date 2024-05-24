@@ -3,6 +3,7 @@ import database, {
 	allocationsCollection,
 } from '@/db/index.native';
 import Account from '@/model/Account';
+import Allocation from '@/model/Allocation';
 import { withObservables } from '@nozbe/watermelondb/react';
 import { Stack, router } from 'expo-router';
 import { useState } from 'react';
