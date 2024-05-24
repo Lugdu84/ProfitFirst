@@ -1,9 +1,18 @@
-import database, { allocationsCollection } from '@/db/index.native';
+import database, {
+	accountsCollection,
+	allocationsCollection,
+} from '@/db/index.native';
+import Account from '@/model/Account';
+import { withObservables } from '@nozbe/watermelondb/react';
 import { Stack, router } from 'expo-router';
 import { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 
-export default function NewAllocationScreen() {
+type NewAllocationScreenProps = {
+	accounts: Account[];
+};
+
+function NewAllocationScreen({ accounts }: NewAllocationScreenProps) {
 	const [income, setIncome] = useState('');
 
 	const saveAllocation = async () => {
@@ -14,6 +23,11 @@ export default function NewAllocationScreen() {
 			router.back();
 		});
 	};
+
+	const calculateCap = (percent: number) => {
+		return `${(Number(income) * percent) / 100} €`;
+	};
+
 	return (
 		<View style={styles.container}>
 			<Stack.Screen options={{ title: 'New allocation' }} />
@@ -27,6 +41,17 @@ export default function NewAllocationScreen() {
 					style={styles.input}
 				/>
 			</View>
+			{accounts.map((account) => (
+				<View
+					key={account.id}
+					style={styles.inputRow}>
+					<Text style={{ flex: 1 }}>
+						{account.name} {account.cap} %
+					</Text>
+					<Text>{calculateCap(account.cap)}</Text>
+					{/* <Text>{showResult(account.tap)}</Text> */}
+				</View>
+			))}
 
 			<Button
 				title="save"
@@ -35,6 +60,12 @@ export default function NewAllocationScreen() {
 		</View>
 	);
 }
+
+const enhance = withObservables([], () => ({
+	accounts: accountsCollection.query(),
+}));
+
+export default enhance(NewAllocationScreen);
 
 const styles = StyleSheet.create({
 	container: {
