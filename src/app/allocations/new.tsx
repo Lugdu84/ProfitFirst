@@ -1,4 +1,5 @@
 import database, {
+	accountAllocationsCollection,
 	accountsCollection,
 	allocationsCollection,
 } from '@/db/index.native';
@@ -18,9 +19,25 @@ function NewAllocationScreen({ accounts }: NewAllocationScreenProps) {
 
 	const saveAllocation = async () => {
 		await database.write(async () => {
-			await allocationsCollection.create((allocation) => {
+			const allocation = await allocationsCollection.create((allocation) => {
 				allocation.income = Number.parseFloat(income);
 			});
+			const account = accounts[0];
+			// for each account, create an account allocation
+
+			await Promise.all(
+				accounts.map((account) => {
+					accountAllocationsCollection.create((item) => {
+						//@ts-ignore
+						item.account.set(account);
+						//@ts-ignore
+						item.allocation.set(allocation);
+						item.cap = account.cap;
+						item.amount = (allocation.income * account.cap) / 100;
+					});
+				})
+			);
+
 			router.back();
 		});
 	};
