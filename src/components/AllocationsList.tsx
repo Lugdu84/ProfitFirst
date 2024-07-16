@@ -1,7 +1,7 @@
 import { allocationsCollection } from '@/db/index.native';
 import Allocation from '@/model/Allocation';
 import { withObservables } from '@nozbe/watermelondb/react';
-import { View, Text, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import AllocationListItem from './AllocationListItem';
 import { Q } from '@nozbe/watermelondb';
 
@@ -20,7 +20,7 @@ function AllocationsList({ allocations }: AllocationsListProps) {
 }
 
 const enhance = withObservables([], () => ({
-	allocations: allocationsCollection.query(Q.sortBy('created_at')),
+	allocations: allocationsCollection.query(Q.sortBy('created_at', Q.desc)),
 }));
 
 export default enhance(AllocationsList);
