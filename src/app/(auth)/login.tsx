@@ -106,5 +106,3 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 	},
 });
-
-// 1:30 in youtube

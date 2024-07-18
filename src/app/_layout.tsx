@@ -9,3 +9,5 @@ export default function RootLayout() {
 		</AuthProvider>
 	);
 }
+
+// youtube : 1:35
