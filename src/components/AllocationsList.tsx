@@ -10,7 +10,6 @@ type AllocationsListProps = {
 };
 
 function AllocationsList({ allocations }: AllocationsListProps) {
-	console.log('AllocationsList', allocations[3]._raw);
 	return (
 		<FlatList
 			data={allocations}
