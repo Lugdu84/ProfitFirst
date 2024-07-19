@@ -1,6 +1,5 @@
-// model/Post.js
 import { Model } from '@nozbe/watermelondb';
-import { field, text } from '@nozbe/watermelondb/decorators';
+import { field, nochange, text } from '@nozbe/watermelondb/decorators';
 
 export default class Account extends Model {
 	static table = 'accounts';
@@ -8,4 +7,5 @@ export default class Account extends Model {
 	@text('name') name!: string;
 	@field('cap') cap!: number;
 	@field('tap') tap!: number;
+	@nochange @text('user_id') userId!: string;
 }

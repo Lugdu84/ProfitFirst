@@ -1,4 +1,5 @@
 import {
+	addColumns,
 	createTable,
 	schemaMigrations,
 } from '@nozbe/watermelondb/Schema/migrations';
@@ -44,6 +45,28 @@ export default schemaMigrations({
 						{ name: 'amount', type: 'number' },
 						{ name: 'cap', type: 'number' },
 					],
+				}),
+			],
+		},
+		{
+			toVersion: 5,
+			steps: [
+				addColumns({
+					table: 'allocations',
+					columns: [{ name: 'user_id', type: 'string' }],
+				}),
+				addColumns({
+					table: 'account_allocs',
+					columns: [{ name: 'user_id', type: 'string' }],
+				}),
+			],
+		},
+		{
+			toVersion: 6,
+			steps: [
+				addColumns({
+					table: 'accounts',
+					columns: [{ name: 'user_id', type: 'string' }],
 				}),
 			],
 		},

@@ -4,7 +4,9 @@ import {
 	children,
 	date,
 	field,
+	nochange,
 	readonly,
+	text,
 } from '@nozbe/watermelondb/decorators';
 import AccountAllocation from './AccountAllocation';
 
@@ -16,6 +18,7 @@ export default class Allocation extends Model {
 	};
 
 	@field('income') income!: number;
+	@nochange @text('user_id') userId!: string;
 	@readonly @date('created_at') createdAt!: Date;
 
 	@children('account_allocs') accountAllocations!: AccountAllocation[];

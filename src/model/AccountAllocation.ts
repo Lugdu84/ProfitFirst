@@ -4,6 +4,8 @@ import {
 	readonly,
 	date,
 	immutableRelation,
+	text,
+	nochange,
 } from '@nozbe/watermelondb/decorators';
 import Account from './Account';
 import Allocation from './Allocation';
@@ -21,4 +23,5 @@ export default class AccountAllocation extends Model {
 	@immutableRelation('allocations', 'allocation_id') allocation!: Allocation;
 	@field('cap') cap!: number;
 	@field('amount') amount!: number;
+	@nochange @text('user_id') userId!: string;
 }
