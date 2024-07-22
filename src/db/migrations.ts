@@ -70,5 +70,25 @@ export default schemaMigrations({
 				}),
 			],
 		},
+		{
+			toVersion: 7,
+			steps: [
+				addColumns({
+					table: 'accounts',
+					columns: [
+						{ name: 'created_at', type: 'number' },
+						{ name: 'updated_at', type: 'number' },
+					],
+				}),
+				addColumns({
+					table: 'allocations',
+					columns: [{ name: 'updated_at', type: 'number' }],
+				}),
+				addColumns({
+					table: 'account_allocs',
+					columns: [{ name: 'updated_at', type: 'number' }],
+				}),
+			],
+		},
 	],
 });

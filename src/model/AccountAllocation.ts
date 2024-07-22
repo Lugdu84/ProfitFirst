@@ -19,6 +19,7 @@ export default class AccountAllocation extends Model {
 	};
 
 	@readonly @date('created_at') createdAt!: Date;
+	@readonly @date('updated_at') updatedAt!: Date;
 	@immutableRelation('accounts', 'account_id') account!: Account;
 	@immutableRelation('allocations', 'allocation_id') allocation!: Allocation;
 	@field('cap') cap!: number;
