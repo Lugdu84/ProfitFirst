@@ -1,9 +1,11 @@
 import AccountsList from '@/components/AccountsList';
 import database, { accountsCollection } from '@/db/index.native';
+import { useAuth } from '@/providers/AuthProvider';
 import { useState } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 
 export default function AccountsScreen() {
+	const { user } = useAuth();
 	const [name, setName] = useState('');
 	const [cap, setCap] = useState('');
 	const [tap, setTap] = useState('');
@@ -20,6 +22,7 @@ export default function AccountsScreen() {
 				account.name = name;
 				account.cap = Number(cap);
 				account.tap = Number(tap);
+				account.userId = user?.id ?? '';
 			});
 		});
 		reset();

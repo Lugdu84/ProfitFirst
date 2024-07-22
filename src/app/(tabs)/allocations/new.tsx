@@ -5,6 +5,7 @@ import database, {
 } from '@/db/index.native';
 import Account from '@/model/Account';
 import Allocation from '@/model/Allocation';
+import { useAuth } from '@/providers/AuthProvider';
 import { withObservables } from '@nozbe/watermelondb/react';
 import { Stack, router } from 'expo-router';
 import { useState } from 'react';
@@ -15,12 +16,14 @@ type NewAllocationScreenProps = {
 };
 
 function NewAllocationScreen({ accounts }: NewAllocationScreenProps) {
+	const { user } = useAuth();
 	const [income, setIncome] = useState('');
 
 	const saveAllocation = async () => {
 		await database.write(async () => {
 			const allocation = await allocationsCollection.create((allocation) => {
 				allocation.income = Number.parseFloat(income);
+				allocation.userId = user?.id ?? '';
 			});
 			const account = accounts[0];
 			// for each account, create an account allocation
@@ -34,6 +37,7 @@ function NewAllocationScreen({ accounts }: NewAllocationScreenProps) {
 						item.allocation.set(allocation);
 						item.cap = account.cap;
 						item.amount = (allocation.income * account.cap) / 100;
+						item.userId = user?.id ?? '';
 					});
 				})
 			);
