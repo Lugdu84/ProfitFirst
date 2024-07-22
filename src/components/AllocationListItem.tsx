@@ -1,4 +1,4 @@
-import {
+import database, {
 	accountAllocationsCollection,
 	allocationsCollection,
 } from '@/db/index.native';
@@ -7,6 +7,7 @@ import Allocation from '@/model/Allocation';
 import { withObservables } from '@nozbe/watermelondb/react';
 import { View, Text, StyleSheet } from 'react-native';
 import AccountAllocationItem from './AccountAllocationItem';
+import { AntDesign } from '@expo/vector-icons';
 
 type AllocationListItemProps = {
 	allocation: Allocation;
@@ -17,6 +18,11 @@ function AllocationListItem({
 	allocation,
 	accountAllocations,
 }: AllocationListItemProps) {
+	const handleDelete = async () => {
+		await database.write(async () => {
+			await allocation.markAsDeleted();
+		});
+	};
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
@@ -24,6 +30,13 @@ function AllocationListItem({
 					{allocation.createdAt.toLocaleDateString()}
 				</Text>
 				<Text style={styles.income}>{allocation.income} €</Text>
+				<AntDesign
+					onPress={handleDelete}
+					style={styles.deleteButton}
+					name="delete"
+					size={20}
+					color="red"
+				/>
 			</View>
 			<View style={styles.accountAllocationsView}>
 				{accountAllocations.map((item) => (
@@ -49,7 +62,6 @@ export default enhance(AllocationListItem);
 
 const styles = StyleSheet.create({
 	container: {
-		// flexDirection: 'row',
 		borderRadius: 10,
 		overflow: 'hidden',
 	},
@@ -57,6 +69,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		backgroundColor: 'gainsboro',
 		justifyContent: 'space-between',
+		alignItems: 'center',
 		padding: 10,
 	},
 	income: {
@@ -70,5 +83,8 @@ const styles = StyleSheet.create({
 	accountAllocationsView: {
 		paddingVertical: 10,
 		gap: 5,
+	},
+	deleteButton: {
+		padding: 10,
 	},
 });
