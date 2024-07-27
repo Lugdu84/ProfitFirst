@@ -19,7 +19,7 @@ export const mySync = async () => {
 			console.log('changes', changes);
 			const { error } = await supabase.rpc('push', { changes });
 			console.log('error', error);
-			// TODO: why delete not working
+			// TODO: why delete not working ?
 		},
 		sendCreatedAsUpdated: true,
 	});
