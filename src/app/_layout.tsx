@@ -10,4 +10,4 @@ export default function RootLayout() {
 	);
 }
 
-// youtube : 02:34
+// youtube : 02:45
